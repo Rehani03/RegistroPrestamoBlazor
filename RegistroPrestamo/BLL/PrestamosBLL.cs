@@ -28,6 +28,8 @@ namespace RegistroPrestamo.BLL
             try
             {
                 contexto.Prestamos.Add(prestamo);
+                //le sumamos el balance a la persona
+                contexto.Personas.Find(prestamo.personaId).balance += prestamo.balance;
                 paso = contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -47,11 +49,24 @@ namespace RegistroPrestamo.BLL
         private static bool Modificar(Prestamo prestamo)
         {
             bool paso = false;
+            decimal BalanceAnterior = Buscar(prestamo.prestamoId).balance;
+            int PersonaIdAnterior = Buscar(prestamo.prestamoId).personaId;
             Contexto contexto = new Contexto();
 
             try
             {
-
+            
+                if(PersonaIdAnterior!= prestamo.personaId)
+                {
+                    contexto.Personas.Find(PersonaIdAnterior).balance -= BalanceAnterior;
+                    contexto.Personas.Find(prestamo.personaId).balance += prestamo.balance;
+                }
+                else
+                {
+                    contexto.Personas.Find(prestamo.personaId).balance -= BalanceAnterior;
+                    contexto.Personas.Find(prestamo.personaId).balance += prestamo.balance;
+                }
+                
                 contexto.Entry(prestamo).State = EntityState.Modified;
                 paso = contexto.SaveChanges() > 0;
 
@@ -77,6 +92,7 @@ namespace RegistroPrestamo.BLL
                 var auxPrestamo = contexto.Prestamos.Find(id);
                 if (auxPrestamo != null)
                 {
+                    contexto.Personas.Find(auxPrestamo.personaId).balance -= auxPrestamo.balance; //le resto el balance a la persona
                     contexto.Prestamos.Remove(auxPrestamo);//remueve la entidad
                     paso = contexto.SaveChanges() > 0;
 
