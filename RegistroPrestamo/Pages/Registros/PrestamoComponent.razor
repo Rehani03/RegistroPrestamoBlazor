@@ -76,7 +76,6 @@
                 <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
                 <button type="submit" class="btn btn-lg btn-success">Guardar</button>
                 <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
-                <button type="button" class="btn btn-lg btn-dark" @onclick="Mostrar">Mostrar</button>
             </div>
         </div>
     </div>
@@ -106,9 +105,16 @@
         listaPersona = PersonasBLL.GetList(p => true);
     }
 
-    private void Mostrar()
+    private void Buscar()
     {
-        toast.ShowInfo(Convert.ToString(this.prestamo.personaId));
+        var encontrado = PrestamosBLL.Buscar(prestamo.prestamoId);
+        if (encontrado != null)
+        {
+            this.prestamo = encontrado;
+        }
+        else
+            toast.ShowWarning("No encontrado");
+
     }
 
     private void CambiarValor()
@@ -130,17 +136,7 @@
         prestamo.balance = auxMonto;
     }
 
-    private void Buscar()
-    {
-        var encontrado = PrestamosBLL.Buscar(prestamo.prestamoId);
-        if (encontrado != null)
-        {
-            this.prestamo = encontrado;
-        }
-        else
-            toast.ShowWarning("No encontrado");
 
-    }
 
 
     private void Nuevo()
