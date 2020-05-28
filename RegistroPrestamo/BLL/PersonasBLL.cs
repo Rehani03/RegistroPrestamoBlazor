@@ -75,13 +75,16 @@ namespace RegistroPrestamo.BLL
 
             try
             {
-                var auxPersona = contexto.Personas.Find(id);
-                if (auxPersona != null)
+                if (!TienePrestamo(id))//si no tiene prestamo entonces que elimine la persona
                 {
-                    contexto.Personas.Remove(auxPersona);//remueve la entidad
-                    paso = contexto.SaveChanges() > 0;
+                    var auxPersona = contexto.Personas.Find(id);
+                    if (auxPersona != null)
+                    {
+                        contexto.Personas.Remove(auxPersona);//remueve la entidad
+                        paso = contexto.SaveChanges() > 0;
 
-                }
+                    }
+                }     
             }
             catch (Exception)
             {
@@ -159,6 +162,28 @@ namespace RegistroPrestamo.BLL
 
             return encontrado;
 
+        }
+
+        private static bool TienePrestamo(int id)
+        {
+            Contexto contexto = new Contexto();
+            bool encontrado = false;
+
+            try
+            {
+                encontrado = contexto.Prestamos.Any(p => p.personaId == id);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+
+            return encontrado;
         }
     }
 }
