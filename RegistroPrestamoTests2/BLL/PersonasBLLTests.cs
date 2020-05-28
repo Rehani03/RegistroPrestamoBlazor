@@ -46,14 +46,15 @@ namespace RegistroPrestamo.BLL.Tests
         [TestMethod()]
         public void ExisteTest()
         {
-            Assert.Fail();
+            bool paso = PersonasBLL.Existe(2);
+            Assert.AreEqual(paso, true);
         }
 
         [TestMethod()]
         public void EliminarTest()
         {
             bool paso;
-            paso = PersonasBLL.Eliminar(1);
+            paso = PersonasBLL.Eliminar(2);
             Assert.AreEqual(paso, true);
         }
     }

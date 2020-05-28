@@ -14,7 +14,7 @@ namespace RegistroPrestamo.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=DATA\PrestamoControl.db");
+            optionsBuilder.UseSqlite(@"Data Source=c:\Prestamos_db\PrestamosDB.db");
         }
 
     }

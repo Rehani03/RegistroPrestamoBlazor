@@ -28,7 +28,7 @@ namespace RegistroPrestamo.BLL.Tests
         public void EliminarTest()
         {
             bool paso;
-            paso = PrestamosBLL.Eliminar(3);
+            paso = PrestamosBLL.Eliminar(1);
             Assert.AreEqual(paso, true);
         }
 
@@ -46,6 +46,13 @@ namespace RegistroPrestamo.BLL.Tests
             var lista = new List<Prestamo>();
             lista = PrestamosBLL.GetList(p => true);
             Assert.AreEqual(lista, lista);
+        }
+
+        [TestMethod()]
+        public void ExisteTest()
+        {
+            bool paso = PrestamosBLL.Existe(2);
+            Assert.AreEqual(paso, true);
         }
     }
 }
