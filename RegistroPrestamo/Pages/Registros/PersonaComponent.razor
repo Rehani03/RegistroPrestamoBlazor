@@ -100,8 +100,22 @@
         Nuevo();
         if (personaId > 0)
         {
-            personas = PersonasBLL.Buscar(personaId);
+            var auxPersona = PersonasBLL.Buscar(personaId);
+            if (auxPersona != null)
+                this.personas = auxPersona;
+            else
+                toast.ShowWarning("No encontrado.");
         }
+    }
+
+    private void Buscar()
+    {
+        var encontrado = PersonasBLL.Buscar(personas.personaId);
+        if (encontrado != null)
+            this.personas = encontrado;
+        else
+            toast.ShowWarning("No encontrado");
+
     }
 
     private void Guardar()
@@ -118,16 +132,6 @@
         {
             toast.ShowError("No fue posible guardar");
         }
-
-    }
-
-    private void Buscar()
-    {
-        var encontrado = PersonasBLL.Buscar(personas.personaId);
-        if (encontrado != null)
-            this.personas = encontrado;
-        else
-            toast.ShowWarning("No encontrado");
 
     }
 

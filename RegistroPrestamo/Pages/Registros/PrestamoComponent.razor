@@ -99,7 +99,11 @@
         Nuevo();
         if (prestamosId > 0)
         {
-            prestamo = PrestamosBLL.Buscar(prestamosId);
+            var auxPretamo = PrestamosBLL.Buscar(prestamosId);
+            if (auxPretamo != null)
+                this.prestamo = auxPretamo;
+            else
+                toast.ShowWarning("No encontrado.");
         }
 
         listaPersona = PersonasBLL.GetList(p => true);
@@ -111,10 +115,21 @@
         if (encontrado != null)
         {
             this.prestamo = encontrado;
+            EstablecerNombre(prestamo);
+
         }
         else
             toast.ShowWarning("No encontrado");
 
+    }
+
+    private void EstablecerNombre(Prestamo prestamo)
+    {
+        var auxPersona = PersonasBLL.Buscar(prestamo.personaId);
+        if (auxPersona != null)
+        {
+            personaSeleccionada = auxPersona.nombre;
+        }
     }
 
     private void CambiarValor()
