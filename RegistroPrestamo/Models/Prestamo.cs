@@ -24,7 +24,9 @@ namespace RegistroPrestamo.Models
         [MinLength(5, ErrorMessage = "El concepto es muy corta.")]
         [MaxLength(40, ErrorMessage = "El concepto debe contener menos de 60 caracteres.")]
         public string concepto { get; set; }
-        
+
+        [Required(ErrorMessage = "El campo monto no puede estar vacio.")]
+        [Range(1, 100000000, ErrorMessage = "El rango es de 1 a 1000000.")]
         public decimal monto { get; set; }
         [Required(ErrorMessage = "El campo balance no puede estar vacio.")]
         public decimal balance { get; set; }

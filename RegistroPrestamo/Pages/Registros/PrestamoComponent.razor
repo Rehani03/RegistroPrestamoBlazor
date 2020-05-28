@@ -41,7 +41,7 @@
                 </div>
                 @*Persona*@
                 <div class="form-group">
-                    <label for="producto_select">PERSONA:</label>
+                    <label for="persona_select">PERSONA:</label>
                     <InputSelect id="persona_select" @bind-Value="personaSeleccionada" @onchange="CambiarValor" @onclick="CambiarValor" class="form-control">
                         <option value="">Elija una Persona</option>
                         @foreach (var item in listaPersona)
@@ -53,14 +53,14 @@
 
                 @*Concepto*@
                 <div class="form-group">
-                    <label>CONCEPTO::</label>
+                    <label>CONCEPTO:</label>
                     <InputText @bind-Value="prestamo.concepto" class="form-control" />
                     <ValidationMessage For="@(() => prestamo.concepto)" />
                 </div>
                 @*Monto*@
                 <div class="form-group">
                     <label>MONTO:</label>
-                    <InputNumber @bind-Value="prestamo.monto" class="form-control" />
+                    <InputNumber @bind-Value="prestamo.monto" @onclick="IgualarMontoBalance" class="form-control" />
                     <ValidationMessage For="@(() => prestamo.monto)" />
                 </div>
                 @*Balance*@
@@ -76,6 +76,7 @@
                 <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
                 <button type="submit" class="btn btn-lg btn-success">Guardar</button>
                 <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+                <button type="button" class="btn btn-lg btn-dark" @onclick="Mostrar">Mostrar</button>
             </div>
         </div>
     </div>
@@ -89,6 +90,7 @@
 
     [Parameter]
     public int prestamosId { get; set; }
+
     private List<Personas> listaPersona = new List<Personas>();
     private string personaSeleccionada { get; set; }
 
@@ -104,9 +106,30 @@
         listaPersona = PersonasBLL.GetList(p => true);
     }
 
+    private void Mostrar()
+    {
+        toast.ShowInfo(Convert.ToString(this.prestamo.personaId));
+    }
+
     private void CambiarValor()
     {
+        try
+        {
+            int auxPersonaId = Int32.Parse(personaSeleccionada);
+            this.prestamo.personaId = auxPersonaId;
+        }
+        catch (Exception)
+        {
 
+            //throw;
+        }
+
+    }
+
+    private void IgualarMontoBalance()
+    {
+        decimal auxMonto = prestamo.monto;
+        prestamo.balance = auxMonto;
     }
 
     private void Buscar()
@@ -125,6 +148,7 @@
     private void Nuevo()
     {
         this.prestamo = new Prestamo();
+        personaSeleccionada = string.Empty;
     }
 
 
@@ -132,7 +156,6 @@
     private void Guardar()
     {
         bool paso;
-        //CambiarValor();
         paso = PrestamosBLL.Guardar(prestamo);
 
         if (paso)

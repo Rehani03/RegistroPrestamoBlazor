@@ -13,8 +13,7 @@ namespace RegistroPrestamo.BLL
     {
         public static bool Guardar(Prestamo prestamo)
         {
-            if (!Existe(prestamo.personaId))//si no existe insertamos
-
+            if (!Existe(prestamo.prestamoId))//si no existe insertamos
                 return Insertar(prestamo);
             else
                 return Modificar(prestamo);
