@@ -18,6 +18,7 @@ namespace RegistroPrestamo.Models
         [DisplayFormat(DataFormatString = "{0:dd,mm, yyyy}")]
         public DateTime fecha { get; set; }
 
+        [Range(1, 1000000, ErrorMessage = "Debe elegir una persona.")]
         public int personaId { get; set; }
 
         [Required(ErrorMessage = "El campo concepto no puede estar vacía.")]
@@ -29,6 +30,7 @@ namespace RegistroPrestamo.Models
         [Range(1, 100000000, ErrorMessage = "El rango es de 1 a 1000000.")]
         public decimal monto { get; set; }
         [Required(ErrorMessage = "El campo balance no puede estar vacio.")]
+        [Range(1, 100000000, ErrorMessage = "El rango es de 1 a 1000000.")]
         public decimal balance { get; set; }
 
         public Prestamo()
