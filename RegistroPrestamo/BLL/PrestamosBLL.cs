@@ -175,5 +175,24 @@ namespace RegistroPrestamo.BLL
             return encontrado;
 
         }
+
+        public static List<Prestamo> GetPrestamos()
+        {
+            List<Prestamo> lista = new List<Prestamo>();
+            Contexto contexto = new Contexto();
+            try
+            {
+                lista = contexto.Prestamos.Where(p => true).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+            return lista;
+        }
     }
 }
