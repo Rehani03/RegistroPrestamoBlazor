@@ -20,7 +20,12 @@ namespace WebApplicationApi.Controllers
             return PrestamosBLL.GetPrestamos();
         }
 
-
+        // GET: api/Prestamo/1
+        [HttpGet("{id}")]
+        public ActionResult<Prestamo> Get(int id)
+        {
+            return PrestamosBLL.Buscar(id);
+        }
 
 
     }
